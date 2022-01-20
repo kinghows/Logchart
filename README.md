@@ -7,6 +7,7 @@ pip install pyecharts
 
 ### Logchart.ini: 
 logfile_directory 
+
 monitor_index
 
 ### execute:
@@ -21,22 +22,6 @@ python SendEmail.py -p emailset.ini -f my_chart1.html,my_chart2.html
 use crontab regularly perform sql_chart.sh,auto generate html chart,and send email.
 
 Enjoy it!
-
-中文处理Linux需要encode，decode：
-
-88行：
-
-cols.append(str(col).encode('raw_unicode_escape').decode('utf-8')) #linux
-
-#cols.append(str(col)) #windows
-
-105行：
-
-strlist.append(str(col).encode('raw_unicode_escape').decode('utf-8')) #linux
-
-#strlist.append(str(col)) #windows
-
-地理坐标系pyecharts在Linux上有BUG，请设置switch = OFF
 
 ## 好用的DBA系列，喜欢的请打颗星：
 
