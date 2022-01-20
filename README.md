@@ -14,13 +14,6 @@ monitor_index
 
 python logchart.py -d D:\GitHub\Logchart -m cn_flush_bio,total write bio,total read bio
 
-
-### send email:
-
-python SendEmail.py -p emailset.ini -f my_chart1.html,my_chart2.html
-
-use crontab regularly perform sql_chart.sh,auto generate html chart,and send email.
-
 Enjoy it!
 
 ## 好用的DBA系列，喜欢的请打颗星：
