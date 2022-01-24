@@ -12,7 +12,9 @@ monitor_index
 
 ### execute:
 
-python logchart.py -d D:\GitHub\Logchart -m cn_flush_bio,total write bio,total read bio
+exe/Logchart.exe
+
+python Logchart.py -d D:\GitHub\Logchart -m cn_flush_bio,total write bio,total read bio
 
 Enjoy it!
 
