@@ -11,6 +11,13 @@ logfile_directory
 monitor_index
 
 ### execute:
+use Logchart.ini:
+
+python Logchart.py
+
+or 
+
+input parameters:
 
 python Logchart.py -d D:\GitHub\Logchart -m cn_flush_bio,total write bio,total read bio
 
