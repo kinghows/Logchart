@@ -71,7 +71,11 @@ def chart(chart_type,title,xlist,ylist,datas,style,themetype):
 if __name__=="__main__":
     config_file="Logchart.ini"
     logfile_directory = ""
-    monitor_index =[]
+    monitor_index =["cn_flush_bio","total write bio","total read bio"]
+    mutli_chart_type ="tab"
+    style = {'themetype':'LIGHT','is_smooth':True,'is_show':False,'opacity':0,'datazoom_opts':'inside','toolbox_opts_is_show':True}
+
+    
 
     opt, args = getopt.getopt(sys.argv[1:], "d:m:")
     for o,v in opt:
@@ -80,7 +84,7 @@ if __name__=="__main__":
         elif o == "-m":
             monitor_index = v.split(",")
 
-    if len(monitor_index)==0 and os.path.exists(config_file):
+    if len(logfile_directory)==0 and os.path.exists(config_file):
         v =''
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -94,38 +98,39 @@ if __name__=="__main__":
         else:
             if v != '':
                 style = eval(v)
-                style_themetype=style.setdefault('themetype','WHITE')
-                if style_themetype=='WHITE':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.WHITE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='LIGHT':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.LIGHT,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='DARK':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.DARK,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='CHALK':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.CHALK,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='ESSOS':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.ESSOS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='INFOGRAPHIC':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.INFOGRAPHIC,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='MACARONS':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.MACARONS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='PURPLE_PASSION':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.PURPLE_PASSION,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='ROMA':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.ROMA,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='ROMANTIC':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='SHINE':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.SHINE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='VINTAGE':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.VINTAGE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='WALDEN':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.WALDEN,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='WESTEROS':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.WESTEROS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
-                elif style_themetype=='WONDERLAND':
-                    themetype=init_opts=opts.InitOpts(theme=ThemeType.WONDERLAND,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
 
+    style_themetype=style.setdefault('themetype','WHITE')
+    if style_themetype=='WHITE':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.WHITE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='LIGHT':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.LIGHT,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='DARK':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.DARK,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='CHALK':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.CHALK,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='ESSOS':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.ESSOS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='INFOGRAPHIC':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.INFOGRAPHIC,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='MACARONS':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.MACARONS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='PURPLE_PASSION':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.PURPLE_PASSION,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='ROMA':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.ROMA,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='ROMANTIC':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='SHINE':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.SHINE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='VINTAGE':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.VINTAGE,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='WALDEN':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.WALDEN,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='WESTEROS':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.WESTEROS,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    elif style_themetype=='WONDERLAND':
+        themetype=init_opts=opts.InitOpts(theme=ThemeType.WONDERLAND,width=style.setdefault('Initopts_width',"1000px"), height=style.setdefault('Initopts_height',"600px"))
+    
     if os.path.exists(logfile_directory):
         filenames=os.listdir(logfile_directory)
         for logfilename in filenames:
