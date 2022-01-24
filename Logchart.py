@@ -67,44 +67,6 @@ def chart(chart_type,title,xlist,ylist,datas,style,themetype):
                 areastyle_opts=opts.AreaStyleOpts(opacity=style.setdefault('opacity',0))
                 ) 
         return c
-    elif chart_type == 'pie':# 饼图
-        if style.setdefault('toolbox_opts_is_show',False):
-            toolbox_opts=opts.ToolboxOpts()
-        else:
-            toolbox_opts=None
-                
-        if style.setdefault('datazoom_opts',None)=='horizontal':
-            datazoom_opts=opts.DataZoomOpts()
-        elif style.setdefault('datazoom_opts',None)=='vertical':
-            datazoom_opts=opts.DataZoomOpts(orient="vertical")
-        elif style.setdefault('datazoom_opts',None)=='inside':
-            datazoom_opts=opts.DataZoomOpts(type_="inside")
-        else:
-            datazoom_opts=None
-
-        c = Pie(themetype)
-        c.set_global_opts(title_opts=opts.TitleOpts(title=title,pos_top=style.setdefault('title_pos_top',None),
-                                                                pos_right=style.setdefault('title_pos_right',None)),
-                legend_opts=opts.LegendOpts(pos_top=style.setdefault('legend_pos_top',None),
-                                            pos_left=style.setdefault('legend_pos_left',None),
-                                            pos_right=style.setdefault('legend_pos_right',None)),
-                toolbox_opts=toolbox_opts,
-                datazoom_opts=datazoom_opts,
-                xaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(rotate=style.setdefault('yaxis_opts_rotate',0),
-                                                                       formatter=style.setdefault('xaxis_opts_formatter',"{value}"))),
-                yaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(formatter=style.setdefault('yaxis_opts_formatter',"{value}"))),
-                )
-        for i in range(len(ylist)):
-            name = ylist[i]
-            data_pair = list(zip(xlist,zdict[name]))
-            c.add(series_name=name,data_pair=data_pair,
-                rosetype=style.setdefault('rosetype',None),#"radius"
-                radius=style.setdefault('radius',None),#["30%", "55%"]
-                center=style.setdefault('center',None),#["75%", "50%"]
-                )
-        c.set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}"))
-        return c
-
 
 if __name__=="__main__":
     config_file="Logchart.ini"
