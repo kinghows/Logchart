@@ -23,6 +23,10 @@ python Logchart.py -d D:\GitHub\Logchart -m cn_flush_bio,total write bio,total r
 
 Enjoy it!
 
+### exe:
+pyinstaller --add-data=".\datasets;pyecharts\datasets." --add-data=".\templates;pyecharts\render\templates." -F -w Logchart.py
+
+
 ## 好用的DBA系列，喜欢的请打颗星：
 
 - [MySQL_Watcher：数据库性能指标的HTML监控报告](https://github.com/kinghows/MySQL_Watcher)
