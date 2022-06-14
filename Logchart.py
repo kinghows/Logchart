@@ -134,7 +134,7 @@ if __name__=="__main__":
     if os.path.exists(logfile_directory):
         filenames=os.listdir(logfile_directory)
         for logfilename in filenames:
-            if "omv-debugonoff.log" in logfilename and ".html" not in logfilename:
+            if "omv-debugonoff.log" in logfilename and ".html" not in logfilename and ".gz" not in logfilename:
                 logfile = os.path.join(logfile_directory,logfilename)
                 htmlfile = logfile + '.html'
                 if not os.path.exists(htmlfile):
