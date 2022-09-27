@@ -44,6 +44,9 @@ crontab -e
 ### exe:
 pyinstaller --add-data=".\datasets;pyecharts\datasets." --add-data=".\templates;pyecharts\render\templates." -F -w Logchart.py
 
+pyinstaller --add-data=".\datasets;pyecharts\datasets." --add-data=".\templates;pyecharts\render\templates." -F -w Logchart_dstat.py
+
+pyinstaller --add-data=".\datasets;pyecharts\datasets." --add-data=".\templates;pyecharts\render\templates." -F -w Logchart_iostat.py
 
 ## 好用的DBA系列，喜欢的请打颗星：
 
