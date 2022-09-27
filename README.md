@@ -25,6 +25,22 @@ python Logchart.py -d D:\GitHub\log -m "cn_flush_bio,total write bio"
 
 Enjoy it!
 
+### iomon:
+
+yum install dstat
+
+yum install sysstat -y
+
+mkdir -p /root/monitor/log
+
+chmod +x /root/monitor/iomon.sh
+
+crontab -e
+
+0 0 * * * /bin/bash /root/monitor/iomon.sh >/dev/null 2>&1 &
+
+
+
 ### exe:
 pyinstaller --add-data=".\datasets;pyecharts\datasets." --add-data=".\templates;pyecharts\render\templates." -F -w Logchart.py
 
