@@ -87,12 +87,14 @@ if __name__=="__main__":
 
     
 
-    opt, args = getopt.getopt(sys.argv[1:], "d:m:")
+    opt, args = getopt.getopt(sys.argv[1:], "d:m:g:")
     for o,v in opt:
         if o == "-d":
             logfile_directory = v
         elif o == "-m":
             monitor_index = v.split(",")
+        elif o == "-g":
+            disk_group = v.split(",")
 
     if len(logfile_directory)==0 and os.path.exists(config_file):
         v =''
