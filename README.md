@@ -23,6 +23,8 @@ python Logchart.py -d D:\GitHub\log
 
 python Logchart.py -d D:\GitHub\log -m "cn_flush_bio,total write bio"
 
+python Logchart_iostat.py -d D:\GitHub\log -m "rMB/s,wMB/s,r_await,w_await,svctm,util" -g "dm-5,dm-6"
+
 Enjoy it!
 
 ### iomon:
