@@ -77,9 +77,11 @@ if __name__=="__main__":
 
     
 
-    opt, args = getopt.getopt(sys.argv[1:], "d:m:")
+    opt, args = getopt.getopt(sys.argv[1:], "p:d:m:")
     for o,v in opt:
-        if o == "-d":
+        if o == "-p":
+            config_file = v
+        elif o == "-d":
             logfile_directory = v
         elif o == "-m":
             monitor_index = v.split(",")
