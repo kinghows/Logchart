@@ -80,6 +80,7 @@ def chart(chart_type,title,xlist,ylist,datas,style,themetype):
 if __name__=="__main__":
     config_file="Logchart_iostat.ini"
     logfile_directory = ""
+    one_logfile = ""
     disk_group = ["sda"]
     monitor_index =["rMB/s","wMB/s","rrqm/s","wrqm/s","r_await","w_await","aqu-sz","rareq-sz","wareq-sz","svctm","util"]
     mutli_chart_type ="tab"
@@ -150,7 +151,10 @@ if __name__=="__main__":
         filenames=os.listdir(logfile_directory)
         for logfilename in filenames:
             if "iostat_" in logfilename and ".html" not in logfilename :
-                logfile = os.path.join(logfile_directory,logfilename)
+                if one_logfile == "":
+                    logfile = os.path.join(logfile_directory,logfilename)
+                else:
+                    logfile = one_logfile
                 htmlfile = logfile + '.html'
                 if not os.path.exists(htmlfile):
                     if mutli_chart_type=='page':
@@ -160,54 +164,58 @@ if __name__=="__main__":
                     xlist=[]
                     datalist=[]
                     title = logfilename[logfilename.index('iostat_')+7:logfilename.index('iostat_')+15]
-                    srcFile = open(logfile, 'r+')
-                    lines = srcFile.readlines()
+                    try:
+                        srcFile = open(logfile, 'r+')
+                        lines = srcFile.readlines()
                 
-                    for line in lines:
-                        if '+' in line:
-                            x = line[11:19]
-                            xlist.append(x)
-                        else:
-                            for disk in disk_group:
-                                if disk in line:
-                                    for index in monitor_index:
-                                        if index =="rMB/s":
-                                            keyv = float(line[findSubStr_clark(line,'.',2)+2:findSubStr_clark(line,'.',3)+2].strip())
-                                        elif index =="wMB/s":
-                                            keyv = float(line[findSubStr_clark(line,'.',3)+2:findSubStr_clark(line,'.',4)+2].strip())
-                                        elif index =="rrqm/s":
-                                            keyv = float(line[findSubStr_clark(line,'.',4)+2:findSubStr_clark(line,'.',5)+2].strip())
-                                        elif index =="wrqm/s":
-                                            keyv = float(line[findSubStr_clark(line,'.',5)+2:findSubStr_clark(line,'.',6)+2].strip())
-                                        elif index =="r_await":
-                                            keyv = float(line[findSubStr_clark(line,'.',8)+2:findSubStr_clark(line,'.',9)+2].strip())
-                                        elif index =="w_await":
-                                            keyv = float(line[findSubStr_clark(line,'.',9)+2:findSubStr_clark(line,'.',10)+2].strip())
-                                        elif index =="aqu-sz":
-                                            keyv = float(line[findSubStr_clark(line,'.',10)+2:findSubStr_clark(line,'.',11)+2].strip())
-                                        elif index =="rareq-sz":
-                                            keyv = float(line[findSubStr_clark(line,'.',11)+2:findSubStr_clark(line,'.',12)+2].strip())
-                                        elif index =="wareq-sz":
-                                            keyv = float(line[findSubStr_clark(line,'.',12)+2:findSubStr_clark(line,'.',13)+2].strip())
-                                        elif index =="svctm":
-                                            keyv = float(line[findSubStr_clark(line,'.',13)+2:findSubStr_clark(line,'.',14)+2].strip())
-                                        elif index =="util":
-                                            keyv = float(line[findSubStr_clark(line,'.',14)+2:findSubStr_clark(line,'.',15)+2].strip())
+                        for line in lines:
+                            if '+' in line:
+                                x = line[11:19]
+                                xlist.append(x)
+                            else:
+                                for disk in disk_group:
+                                    if disk in line:
+                                        for index in monitor_index:
+                                            if index =="rMB/s":
+                                                keyv = float(line[findSubStr_clark(line,'.',2)+2:findSubStr_clark(line,'.',3)+2].strip())
+                                            elif index =="wMB/s":
+                                                keyv = float(line[findSubStr_clark(line,'.',3)+2:findSubStr_clark(line,'.',4)+2].strip())
+                                            elif index =="rrqm/s":
+                                                keyv = float(line[findSubStr_clark(line,'.',4)+2:findSubStr_clark(line,'.',5)+2].strip())
+                                            elif index =="wrqm/s":
+                                                keyv = float(line[findSubStr_clark(line,'.',5)+2:findSubStr_clark(line,'.',6)+2].strip())
+                                            elif index =="r_await":
+                                                keyv = float(line[findSubStr_clark(line,'.',8)+2:findSubStr_clark(line,'.',9)+2].strip())
+                                            elif index =="w_await":
+                                                keyv = float(line[findSubStr_clark(line,'.',9)+2:findSubStr_clark(line,'.',10)+2].strip())
+                                            elif index =="aqu-sz":
+                                                keyv = float(line[findSubStr_clark(line,'.',10)+2:findSubStr_clark(line,'.',11)+2].strip())
+                                            elif index =="rareq-sz":
+                                                keyv = float(line[findSubStr_clark(line,'.',11)+2:findSubStr_clark(line,'.',12)+2].strip())
+                                            elif index =="wareq-sz":
+                                                keyv = float(line[findSubStr_clark(line,'.',12)+2:findSubStr_clark(line,'.',13)+2].strip())
+                                            elif index =="svctm":
+                                                keyv = float(line[findSubStr_clark(line,'.',13)+2:findSubStr_clark(line,'.',14)+2].strip())
+                                            elif index =="util":
+                                                keyv = float(line[findSubStr_clark(line,'.',14)+2:findSubStr_clark(line,'.',15)+2].strip())
 
-                                        data = []
-                                        data.append(x)
-                                        data.append(disk)
-                                        data.append(index)
-                                        data.append(keyv)
-                                        datalist.append(data)
-                    srcFile.close()
-
-                    for disk in disk_group:
-                        if mutli_chart_type=='page':
-                            page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype))
-                        else:
-                            page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype),disk)
-                    page.render(path=htmlfile)
+                                            data = []
+                                            data.append(x)
+                                            data.append(disk)
+                                            data.append(index)
+                                            data.append(keyv)
+                                            datalist.append(data)
+                    except:
+                        print()
+                    else:
+                        for disk in disk_group:
+                            if mutli_chart_type=='page':
+                                page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype))
+                            else:
+                                page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype),disk)
+                        page.render(path=htmlfile)
+                    finally:
+                        srcFile.close()
     else:   
         print('Please check '+logfile_directory+' exists!')
 
