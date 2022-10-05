@@ -150,11 +150,8 @@ if __name__=="__main__":
     if os.path.exists(logfile_directory):
         filenames=os.listdir(logfile_directory)
         for logfilename in filenames:
-            if "iostat_" in logfilename and ".html" not in logfilename :
-                if one_logfile == "":
-                    logfile = os.path.join(logfile_directory,logfilename)
-                else:
-                    logfile = one_logfile
+            if "iostat_" in logfilename and ".html" not in logfilename and ".zip" not in logfilename :
+                logfile = os.path.join(logfile_directory,logfilename)
                 htmlfile = logfile + '.html'
                 if not os.path.exists(htmlfile):
                     if mutli_chart_type=='page':
@@ -206,16 +203,16 @@ if __name__=="__main__":
                                             data.append(keyv)
                                             datalist.append(data)
                     except:
-                        print()
-                    else:
-                        for disk in disk_group:
-                            if mutli_chart_type=='page':
-                                page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype))
-                            else:
-                                page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype),disk)
-                        page.render(path=htmlfile)
+                        print(logfile+' Some lines are incorrectly formatted，maybe not write finish.')
                     finally:
                         srcFile.close()
+
+                    for disk in disk_group:
+                        if mutli_chart_type=='page':
+                            page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype))
+                        else:
+                            page.add(chart('line',disk,xlist,monitor_index,datalist,style,themetype),disk)
+                    page.render(path=htmlfile)
     else:   
         print('Please check '+logfile_directory+' exists!')
 
