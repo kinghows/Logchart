@@ -39,7 +39,10 @@ chmod +x /root/monitor/iomon.sh
 
 crontab -e
 
-0 0 * * * /bin/bash /root/monitor/iomon.sh >/dev/null 2>&1 &
+0 0 * * * /bin/bash /root/monitor/iomon.sh >>/root/monitor/iomon.log
+
+0 0 * * * /bin/bash /root/monitor/iomon_email.sh >>/root/monitor/iomon_email.log
+
 
 
 
